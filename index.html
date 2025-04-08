@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="menu">
+      </ul> 
+</body>
+<script>
+fetch('menu.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('failed to fetch menu');
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        console.log('menu:', data);
+        
+        const menu = document.getElementById('menu'); // Допустим, есть <ul id="menu-list">
+        if (menu) {
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="${item.url}">${item.title}</a>`;
+                menu.appendChild(li);
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+</script>
+</html>
